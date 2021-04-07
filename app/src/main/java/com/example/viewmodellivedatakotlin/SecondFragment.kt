@@ -30,7 +30,8 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        datoViewModel = ViewModelProvider(requireActivity()).get(DatoViewModel::class.java)
+        datoViewModel = ViewModelProvider(requireActivity())
+            .get(DatoViewModel::class.java)
         val secondText = view.findViewById<TextView>(R.id.textview_second)
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
