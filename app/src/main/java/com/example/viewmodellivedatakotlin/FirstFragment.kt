@@ -17,9 +17,6 @@ import androidx.navigation.fragment.findNavController
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class FirstFragment : Fragment() {
-
-    private var numero: Int = 0
-    //val datoViewModel: DatoViewModel by viewModels()
     private var datoViewModel: DatoViewModel? = null
     var vista: TextView? = null
     override fun onCreateView(
@@ -27,7 +24,6 @@ class FirstFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        numero = 1
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
@@ -39,8 +35,8 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
         view.findViewById<Button>(R.id.cambia).setOnClickListener{
-            numero++
-            datoViewModel?.datoObservable?.value = "Otro valor " + numero
+            datoViewModel?.contador?.value = datoViewModel?.contador?.value?.plus(1)
+            datoViewModel?.datoObservable?.value = "Otro valor " + datoViewModel?.contador?.value
         }
         datoViewModel?.datoObservable?.observe(viewLifecycleOwner, Observer {nuevo_valor ->
             Log.d("app:","Valor: $nuevo_valor")
