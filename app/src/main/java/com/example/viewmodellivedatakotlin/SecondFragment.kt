@@ -1,17 +1,24 @@
 package com.example.viewmodellivedatakotlin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class SecondFragment : Fragment() {
+
+    private var datoViewModel: DatoViewModel? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -23,9 +30,15 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        datoViewModel = ViewModelProvider(requireActivity()).get(DatoViewModel::class.java)
+        val secondText = view.findViewById<TextView>(R.id.textview_second)
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
+        datoViewModel?.datoObservable?.observe(viewLifecycleOwner, Observer {nuevo_valor ->
+            Log.d("app:","Valor: $nuevo_valor")
+            secondText!!.text=nuevo_valor
+        })
+        secondText!!.text = datoViewModel?.datoObservable?.value
     }
 }
